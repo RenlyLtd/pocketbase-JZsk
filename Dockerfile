@@ -1,19 +1,18 @@
-
 FROM alpine:latest as download
 
 RUN apk add curl
 
-RUN curl -s https://get-latest.deno.dev/pocketbase/pocketbase?no-v=true >> tag.txt
+RUN curl -s https://get-latest.deno.dev/parkuman/pocketcms?no-v=true >> tag.txt
 
-RUN wget https://github.com/pocketbase/pocketbase/releases/download/v$(cat tag.txt)/pocketbase_$(cat tag.txt)_linux_amd64.zip \
-    && unzip pocketbase_$(cat tag.txt)_linux_amd64.zip \
-    && chmod +x /pocketbase
+RUN wget https://github.com/parkuman/pocketcms/releases/download/v$(cat tag.txt)/pocketcms_$(cat tag.txt)_linux_amd64.zip \
+    && unzip pocketcms_$(cat tag.txt)_linux_amd64.zip \
+    && chmod +x /pocketcms
 
 FROM alpine:latest
 
 RUN apk update && apk add --update git build-base ca-certificates && rm -rf /var/cache/apk/*
 
-COPY --from=download /pocketbase /usr/local/bin/pocketbase
+COPY --from=download /pocketcms /usr/local/bin/pocketcms
 
 # Create a startup script
 COPY start.sh /usr/local/bin/start.sh

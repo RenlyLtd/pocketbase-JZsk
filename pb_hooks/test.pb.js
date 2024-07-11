@@ -1,3 +1,3 @@
 onAfterBootstrap((e) => {
-  console.log(e.app);
+  console.log("Hooks are working");
 });
