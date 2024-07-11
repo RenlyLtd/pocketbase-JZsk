@@ -1,3 +1,4 @@
+
 FROM alpine:latest as download
 
 RUN apk add curl
@@ -14,9 +15,14 @@ RUN apk update && apk add --update git build-base ca-certificates && rm -rf /var
 
 COPY --from=download /pocketbase /usr/local/bin/pocketbase
 
-COPY ./pb_migrations /root/pocketbase/pb_migrations
-COPY ./pb_hooks /root/pocketbase/pb_hooks
+# Create a startup script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Copy hooks to a temporary location
+COPY ./pb_hooks /tmp/pb_hooks
+COPY ./pb_migrations /tmp/pb_migrations
 
 EXPOSE 8090
 
-ENTRYPOINT /usr/local/bin/pocketbase serve --http=0.0.0.0:8090 --dir=/root/pocketbase
+ENTRYPOINT ["/usr/local/bin/start.sh"]
