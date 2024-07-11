@@ -14,4 +14,4 @@ cp -r /tmp/pb_hooks /root/pocketbase/
 cp -r /tmp/pb_migrations /root/pocketbase/
 
 # Restart PocketBase
-/usr/local/bin/pocketbase serve --http=0.0.0.0:8090 --dir=/root/pocketbase
+/usr/local/bin/pocketbase serve --http=0.0.0.0:8090 --dir=/root/pocketbase/pb_data
