@@ -14,6 +14,10 @@ RUN apk update && apk add --update git build-base ca-certificates && rm -rf /var
 
 COPY --from=download /pocketbase /usr/local/bin/pocketbase
 
+COPY ./pb_migrations /pb/pb_migrations
+
+COPY ./pb_hooks /pb/pb_hooks
+
 EXPOSE 8090
 
 ENTRYPOINT /usr/local/bin/pocketbase serve --http=0.0.0.0:8090 --dir=/root/pocketbase
